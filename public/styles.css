@@ -1,28 +1,117 @@
+/* reset & base */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-    font-family: sans-serif;
-    background: #f4f4f4;
-    margin: 0;
-    padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f4f7fa;
+  color: #333;
+  overflow-x: hidden;
 }
-.container {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
+
+/* fixed upload section */
+.upload-section {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: #fff;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border-bottom: 1px solid #e2e8f0;
+  z-index: 1000;
+}
+.upload-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+}
+.form-field {
+  flex: 1 1 150px;
+}
+.form-field label {
+  display: block;
+  margin-bottom: .25rem;
+  font-size: .9rem;
+  font-weight: 600;
+}
+.form-field input[type="text"],
+.form-field input[type="url"],
+.form-field input[type="file"] {
+  width: 100%;
+  padding: .5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+.form-actions {
+  flex: 0 0 auto;
+}
+.btn-primary {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: .6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn-primary:hover {
+  background: #1d4ed8;
+}
+
+/* main content pushed below upload */
+.app {
+  padding-top: 130px; /* height of .upload-section + some gap */
+  width: 90%;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* file list styling */
+.file-list-section {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.title {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  color: #2d3748;
 }
 .file-list {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
 }
-.file-list li {
-    margin: 10px 0;
+.file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin-bottom: .75rem;
+  background: #fafafa;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 .file-link {
-    font-weight: bold;
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+  margin-right: .5rem;
+}
+.file-link:hover {
+  text-decoration: underline;
 }
 .description {
-    margin-left: 10px;
-    color: #555;
+  color: #555;
+  font-size: .9rem;
 }
 .copy-btn {
-    margin-left: 10px;
+  background: #e2e8f0;
+  border: none;
+  padding: .4rem .8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: .9rem;
+}
+.copy-btn:hover {
+  background: #cbd5e0;
 }

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>File Server</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <!-- Upload form -->
+  <section class="upload-section">
+    <form class="upload-form" action="/upload" method="POST" enctype="multipart/form-data">
+      <div class="form-field">
+        <label for="fileName">File Name</label>
+        <input type="text" id="fileName" name="fileName" placeholder="e.g., firmware.bin" required />
+      </div>
+      <div class="form-field">
+        <label for="description">Description</label>
+        <input type="text" id="description" name="description" placeholder="Optional description" />
+      </div>
+      <div class="form-field">
+        <label for="version">Version</label>
+        <input type="text" id="version" name="version" placeholder="e.g., 1.0.0" required />
+      </div>
+      <div class="form-field">
+        <label for="githubUrl">GitHub URL</label>
+        <input type="url" id="githubUrl" name="githubUrl" placeholder="e.g., https://github.com/user/repo" />
+      </div>
+      <div class="form-field">
+        <label for="file">Select File</label>
+        <input type="file" id="file" name="file" required />
+      </div>
+      <div class="form-field">
+        <label for="date">Upload Date</label>
+        <input type="text" id="date" name="uploadDate" readonly value="" />
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Upload File</button>
+      </div>
+    </form>
+  </section>
+  
+  <script>
+    // Set the current date for the Upload Date field
+    document.getElementById('date').value = new Date().toISOString();
+  </script>
+  
+
+  <!-- File list -->
+  <main class="app">
+    <section class="file-list-section">
+      <h1 class="title">📂 Available Files</h1>
+      <ul id="file-list" class="file-list">
+        <!-- Injected dynamically -->
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    // Fetch and display files
+    fetch('/api/files')
+      .then(r => r.json())
+      .then(files => {
+        const ul = document.getElementById('file-list');
+        ul.innerHTML = '';
+        files.forEach(f => {
+          const li = document.createElement('li');
+          li.className = 'file-item';
+          li.innerHTML = `
+            <div class="file-info">
+                <a href="${f.githubUrl}" class="file-link" target="_blank">${f.name}</a>
+                <div class="file-meta">
+                <span class="version"><strong>Version:</strong> ${f.version || 'N/A'}</span><br>
+                <span class="date"><strong>Uploaded on:</strong> ${f.uploadDate || 'Unknown'}</span><br>
+                <span class="url"><strong>GitHub:</strong> <a href="${f.githubUrl}" target="_blank">${f.githubUrl || 'No URL available'}</a></span><br>
+                <span class="description"><strong>Description:</strong> ${f.description || 'No description'}</span>
+                </div>
+            </div>
+            <button class="copy-btn" data-url="${f.url}">Copy Link</button>
+            `;
+
+          ul.appendChild(li);
+
+          li.querySelector('.copy-btn').addEventListener('click', e => {
+            const url = e.currentTarget.dataset.url;
+            const tmp = document.createElement('input');
+            tmp.value = url;
+            document.body.appendChild(tmp);
+            tmp.select();
+            document.execCommand('copy');
+            document.body.removeChild(tmp);
+            alert('Copied: ' + url);
+          });
+        });
+      })
+      .catch(console.error);
+
+    // Auto-fill upload date
+    const form = document.querySelector('.upload-form');
+    form.addEventListener('submit', (e) => {
+      const dateInput = document.getElementById('date');
+      dateInput.value = new Date().toISOString();
+    });
+  </script>
+
+</body>
+</html>
