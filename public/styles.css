@@ -1,0 +1,28 @@
+body {
+    font-family: sans-serif;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+.file-list {
+    list-style: none;
+    padding: 0;
+}
+.file-list li {
+    margin: 10px 0;
+}
+.file-link {
+    font-weight: bold;
+}
+.description {
+    margin-left: 10px;
+    color: #555;
+}
+.copy-btn {
+    margin-left: 10px;
+}
