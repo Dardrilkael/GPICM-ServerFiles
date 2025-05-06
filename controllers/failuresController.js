@@ -3,10 +3,27 @@ const fs = require('fs');
 const path = require('path');
 
 const postFile = ('/upload', (req, res) => {
-    const fileName = req.headers['x-filename'] || 'uploaded.csv';
-    const filePath = path.join(__dirname, '..', 'files', fileName);
-    const csvData = req.body;
+  
+    console.log('--- Incoming Request ---');
+    console.log('Headers:', req.headers);
+    //console.log('Body:', req.body);
+    console.log('------------------------');
+  
 
+
+  
+
+    const fileName = req.headers['x-filename'] || 'uploaded.csv';
+    const filePath = path.join(__dirname, '..', 'uploads/backup', fileName);
+
+    filesDir = path.join(__dirname, '..', 'uploads/backup');
+    // Verifica se o diretório existe, senão cria
+    if (!fs.existsSync(filesDir)) {
+      fs.mkdirSync(filesDir, { recursive: true });
+    }
+
+    const csvData = req.body;
+    
     if (!fileName) {
         return res.status(400).send('Missing x-filename header');
       }

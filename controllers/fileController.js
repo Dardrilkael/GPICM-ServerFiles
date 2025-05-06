@@ -2,11 +2,14 @@ const path = require('path');
 const fs = require('fs');
 const { loadMetadata, saveMetadata } = require('../utils/metadataHandler');
 
-const fileDirectory = path.join(__dirname, '..', 'files');
+const fileDirectory = path.join(__dirname, '..', 'uploads/files');
 const metadataPath = path.join(__dirname, '..', 'metadata.json');
 
 // List files with metadata and render HTML
 const getFileList = (req, res) => {
+    if (!fs.existsSync(fileDirectory)) {
+      fs.mkdirSync(fileDirectory, { recursive: true });
+    }
     fs.readdir(fileDirectory, async (err, files) => {
         if (err) return res.status(500).send('Error listing files.');
         console.log('metadataPath', metadataPath);

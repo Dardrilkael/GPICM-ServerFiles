@@ -4,7 +4,7 @@ const path = require('path');
 const { getFileList, uploadFile, downloadFile, getFileListJson } = require('../controllers/fileController');
 
 const router = express.Router();
-const fileDirectory = path.join(__dirname, '..', 'files');
+const fileDirectory = path.join(__dirname, '..', 'uploads/files');
 
 // Multer config
 const storage = multer.diskStorage({

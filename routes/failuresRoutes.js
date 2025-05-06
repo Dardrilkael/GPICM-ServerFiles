@@ -1,9 +1,10 @@
 const express = require('express');
 const path = require('path');
 const { postFile } = require('../controllers/failuresController');
-
+const bodyParser = require('body-parser');
 const router = express.Router();
 
+router.use(bodyParser.text({ type: '*/*' }));
 
 // Routes
 
