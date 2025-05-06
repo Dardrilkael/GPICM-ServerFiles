@@ -83,7 +83,7 @@
           ul.appendChild(li);
 
           li.querySelector('.copy-btn').addEventListener('click', e => {
-            const url = e.currentTarget.dataset.url;
+            const url = window.location.origin + e.currentTarget.dataset.url;
             const tmp = document.createElement('input');
             tmp.value = url;
             document.body.appendChild(tmp);
